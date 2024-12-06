@@ -13,13 +13,12 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "order_product_joins")
-public class OrderProductJoin {
+@Table(name = "order_line_items")
+public class OrderLineItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long orderId;
     private Long productId;
 
     private int quantity;
