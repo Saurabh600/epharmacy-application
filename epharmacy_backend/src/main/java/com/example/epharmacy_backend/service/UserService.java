@@ -1,9 +1,9 @@
 package com.example.epharmacy_backend.service;
 
-import com.example.epharmacy_backend.dto.mapper.UserDtoMapper;
-import com.example.epharmacy_backend.dto.request.UserRegisterDto;
-import com.example.epharmacy_backend.dto.request.UsernamePasswordDto;
-import com.example.epharmacy_backend.dto.response.UserDto;
+import com.example.epharmacy_backend.dto.mapper.UserDTOMapper;
+import com.example.epharmacy_backend.dto.request.UserReqDTO;
+import com.example.epharmacy_backend.dto.request.AuthReqDTO;
+import com.example.epharmacy_backend.dto.response.UserDTO;
 import com.example.epharmacy_backend.entity.Address;
 import com.example.epharmacy_backend.entity.Credential;
 import com.example.epharmacy_backend.entity.UserInfo;
@@ -23,23 +23,23 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final UserDtoMapper userDtoMapper;
+    private final UserDTOMapper userDtoMapper;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    public UserDto getUserById(long userid) {
+    public UserDTO getUserById(long userid) {
         UserInfo userInfo = userRepository.findById(userid)
                 .orElseThrow(() -> new EntityNotFoundException("invalid userId"));
         return userDtoMapper.apply(userInfo);
     }
 
-    public UserDto getUserByEmailId(String emailId) {
+    public UserDTO getUserByEmailId(String emailId) {
         UserInfo userInfo = userRepository.findByEmailId(emailId.toLowerCase())
                 .orElseThrow(() -> new EntityNotFoundException("invalid emailId"));
         return userDtoMapper.apply(userInfo);
     }
 
-    public UserDto createNewUser(UserRegisterDto dto) {
+    public UserDTO createNewUser(UserReqDTO dto) {
         boolean userExits = userRepository.existsByEmailId(dto.getEmailId().toLowerCase());
 
         if (userExits) {
@@ -73,7 +73,7 @@ public class UserService {
         return userDtoMapper.apply(newUser);
     }
 
-    public void verify(UsernamePasswordDto dto) throws AuthenticationException {
+    public void verify(AuthReqDTO dto) throws AuthenticationException {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         dto.getEmailId().toLowerCase(),

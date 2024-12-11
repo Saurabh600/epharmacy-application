@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRegisterDto {
+public class UserReqDTO {
     @NotBlank(message = "firstName is required")
     private String firstName;
 
@@ -39,5 +39,5 @@ public class UserRegisterDto {
 
     @NotNull(message = "address is required")
     @Valid
-    private AddressBodyDto address;
+    private AddressReqDto address;
 }

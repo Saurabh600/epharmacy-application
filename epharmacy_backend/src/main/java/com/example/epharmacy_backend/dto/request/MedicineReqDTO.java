@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateMedicineDto {
+public class MedicineReqDTO {
     @NotBlank(message = "this field is required")
     private String name;
 

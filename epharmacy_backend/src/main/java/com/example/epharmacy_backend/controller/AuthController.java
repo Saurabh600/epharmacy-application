@@ -1,9 +1,9 @@
 package com.example.epharmacy_backend.controller;
 
-import com.example.epharmacy_backend.dto.request.UserRegisterDto;
-import com.example.epharmacy_backend.dto.request.UsernamePasswordDto;
-import com.example.epharmacy_backend.dto.response.ApiErrorRes;
-import com.example.epharmacy_backend.dto.response.UserDto;
+import com.example.epharmacy_backend.dto.request.UserReqDTO;
+import com.example.epharmacy_backend.dto.request.AuthReqDTO;
+import com.example.epharmacy_backend.dto.response.ErrorDTO;
+import com.example.epharmacy_backend.dto.response.UserDTO;
 import com.example.epharmacy_backend.service.JwtService;
 import com.example.epharmacy_backend.service.UserService;
 import jakarta.validation.Valid;
@@ -26,7 +26,7 @@ public class AuthController {
     private final JwtService jwtService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody @Valid UserRegisterDto dto) {
+    public ResponseEntity<UserDTO> register(@RequestBody @Valid UserReqDTO dto) {
         var newUser = userService.createNewUser(dto);
 
         return ResponseEntity
@@ -35,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> generateToken(@RequestBody @Valid UsernamePasswordDto dto) {
+    public ResponseEntity<Object> generateToken(@RequestBody @Valid AuthReqDTO dto) {
         try {
             userService.verify(dto);
             String token = jwtService.generateToken(dto.getEmailId());
@@ -47,7 +47,7 @@ public class AuthController {
 
             return ResponseEntity.ok(res);
         } catch (AuthenticationException e) {
-            var res = ApiErrorRes.builder()
+            var res = ErrorDTO.builder()
                     .httpStatus(HttpStatus.UNAUTHORIZED.toString())
                     .message("credential failed!")
                     .error("invalid username or password!")

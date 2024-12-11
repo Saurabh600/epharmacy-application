@@ -1,6 +1,6 @@
 package com.example.epharmacy_backend.advice;
 
-import com.example.epharmacy_backend.dto.response.ApiErrorRes;
+import com.example.epharmacy_backend.dto.response.ErrorDTO;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -20,11 +20,11 @@ import java.util.HashMap;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<ApiErrorRes> resourceNotFoundException(NoResourceFoundException exception) {
+    public ResponseEntity<ErrorDTO> resourceNotFoundException(NoResourceFoundException exception) {
         var method = exception.getHttpMethod().toString();
         var url = exception.getResourcePath();
 
-        var response = ApiErrorRes.builder()
+        var response = ErrorDTO.builder()
                 .httpStatus(HttpStatus.NOT_FOUND.toString())
                 .message("invalid request!")
                 .error(method + " " + url + " does not exits!")
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(JwtException.class)
-    public ResponseEntity<ApiErrorRes> jwtException(JwtException exception) {
+    public ResponseEntity<ErrorDTO> jwtException(JwtException exception) {
         String err;
         if (exception instanceof ExpiredJwtException) {
             err = "Jwt token is expired!";
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
             err = "Jwt exception!";
         }
 
-        var response = ApiErrorRes.builder()
+        var response = ErrorDTO.builder()
                 .httpStatus(HttpStatus.UNAUTHORIZED.toString())
                 .message("invalid bearer token")
                 .error(err)
@@ -56,8 +56,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ApiErrorRes> entityNotFoundException(EntityNotFoundException exception) {
-        var response = ApiErrorRes.builder()
+    public ResponseEntity<ErrorDTO> entityNotFoundException(EntityNotFoundException exception) {
+        var response = ErrorDTO.builder()
                 .httpStatus(HttpStatus.BAD_REQUEST.toString())
                 .message("resource not found!")
                 .error(exception.getLocalizedMessage())
@@ -68,8 +68,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity<ApiErrorRes> entityExitsException(EntityExistsException exception) {
-        var response = ApiErrorRes.builder()
+    public ResponseEntity<ErrorDTO> entityExitsException(EntityExistsException exception) {
+        var response = ErrorDTO.builder()
                 .httpStatus(HttpStatus.BAD_REQUEST.toString())
                 .message(exception.getMessage())
                 .error("duplicate field exception!")
@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiErrorRes> requestBodyValidationException(
+    public ResponseEntity<ErrorDTO> requestBodyValidationException(
             MethodArgumentNotValidException exception) {
         var errors = new HashMap<String, Object>();
         exception.getBindingResult()
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
                         .put(fieldError.getField(), fieldError.getDefaultMessage())
                 );
 
-        var response = ApiErrorRes.builder()
+        var response = ErrorDTO.builder()
                 .httpStatus(HttpStatus.BAD_REQUEST.toString())
                 .message("request body validation failed!")
                 .error(errors)
@@ -100,8 +100,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiErrorRes> unknownExceptionHandler(Exception exception) {
-        var response = ApiErrorRes.builder()
+    public ResponseEntity<ErrorDTO> unknownExceptionHandler(Exception exception) {
+        var response = ErrorDTO.builder()
                 .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR.toString())
                 .message("internal server error!")
                 .error(null)

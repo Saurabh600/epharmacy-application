@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MedicineDto {
+public class MedicineDTO {
     private Long id;
 
     private String name;

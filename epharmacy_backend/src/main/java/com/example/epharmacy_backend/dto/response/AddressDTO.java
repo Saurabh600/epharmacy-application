@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class AddressDto {
+public class AddressDTO {
     private String pinCode;
     private String street;
     private String city;

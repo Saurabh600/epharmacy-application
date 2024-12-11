@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserDto {
+public class UserDTO {
     private long userId;
     private String firstName;
     private String lastName;
@@ -15,5 +15,5 @@ public class UserDto {
     private int age;
     private Gender gender;
     private Role role;
-    private AddressDto address;
+    private AddressDTO address;
 }

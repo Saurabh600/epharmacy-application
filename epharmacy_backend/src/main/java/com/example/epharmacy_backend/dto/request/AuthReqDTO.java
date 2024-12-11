@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UsernamePasswordDto {
+public class AuthReqDTO {
     @NotBlank(message = "emailId is required")
     private String emailId;
 

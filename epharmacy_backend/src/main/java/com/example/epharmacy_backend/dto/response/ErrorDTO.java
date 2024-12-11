@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiErrorRes {
+public class ErrorDTO {
     private String httpStatus;
     private String message;
     private Object error;

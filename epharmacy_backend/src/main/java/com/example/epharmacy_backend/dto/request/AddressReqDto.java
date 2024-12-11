@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressBodyDto {
+public class AddressReqDto {
     @Pattern(regexp = "^[1-9]\\d{5}$", message = "pinCode must of 6 digits")
     private String pinCode;
 

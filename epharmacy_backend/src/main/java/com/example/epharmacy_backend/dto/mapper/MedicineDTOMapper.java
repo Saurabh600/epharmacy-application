@@ -1,6 +1,6 @@
 package com.example.epharmacy_backend.dto.mapper;
 
-import com.example.epharmacy_backend.dto.response.MedicineDto;
+import com.example.epharmacy_backend.dto.response.MedicineDTO;
 import com.example.epharmacy_backend.entity.Medicine;
 import com.example.epharmacy_backend.entity.MedicineCategory;
 import com.example.epharmacy_backend.entity.SideEffect;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.function.Function;
 
 @Component
-public class MedicineDtoMapper implements Function<Medicine, MedicineDto> {
+public class MedicineDTOMapper implements Function<Medicine, MedicineDTO> {
     @Override
-    public MedicineDto apply(Medicine medicine) {
-        return MedicineDto.builder()
+    public MedicineDTO apply(Medicine medicine) {
+        return MedicineDTO.builder()
                 .id(medicine.getMedicineId())
                 .name(medicine.getName())
                 .manufacturer(medicine.getManufacturer())

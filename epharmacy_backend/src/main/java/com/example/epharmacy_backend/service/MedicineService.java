@@ -1,8 +1,8 @@
 package com.example.epharmacy_backend.service;
 
-import com.example.epharmacy_backend.dto.mapper.MedicineDtoMapper;
-import com.example.epharmacy_backend.dto.request.CreateMedicineDto;
-import com.example.epharmacy_backend.dto.response.MedicineDto;
+import com.example.epharmacy_backend.dto.mapper.MedicineDTOMapper;
+import com.example.epharmacy_backend.dto.request.MedicineReqDTO;
+import com.example.epharmacy_backend.dto.response.MedicineDTO;
 import com.example.epharmacy_backend.entity.*;
 import com.example.epharmacy_backend.repository.MedicineCategoryRepository;
 import com.example.epharmacy_backend.repository.MedicineRepository;
@@ -20,9 +20,9 @@ public class MedicineService {
     private final MedicineRepository medicineRepository;
     private final MedicineCategoryRepository medicineCategoryRepository;
     private final SideEffectRepository sideEffectRepository;
-    private final MedicineDtoMapper medicineDtoMapper;
+    private final MedicineDTOMapper medicineDtoMapper;
 
-    public List<MedicineDto> getMedicines() {
+    public List<MedicineDTO> getMedicines() {
         return medicineRepository
                 .findAll()
                 .stream()
@@ -30,7 +30,7 @@ public class MedicineService {
                 .toList();
     }
 
-    public MedicineDto getMedicineById(long medicineId) {
+    public MedicineDTO getMedicineById(long medicineId) {
         var medicine = medicineRepository.findById(medicineId).orElse(null);
         if (medicine == null) {
             return null;
@@ -77,7 +77,7 @@ public class MedicineService {
                 .toList();
     }
 
-    public MedicineDto createNewMedicine(CreateMedicineDto dto) {
+    public MedicineDTO createNewMedicine(MedicineReqDTO dto) {
         var ratings = MedicineRating.builder()
                 .average(dto.getAverageRating())
                 .reviews(dto.getReviews())

@@ -1,6 +1,6 @@
 package com.example.epharmacy_backend.controller;
 
-import com.example.epharmacy_backend.dto.response.UserDto;
+import com.example.epharmacy_backend.dto.response.UserDTO;
 import com.example.epharmacy_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{user_id}")
-    public ResponseEntity<UserDto> getUser(@PathVariable("user_id") long userId) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable("user_id") long userId) {
         var userData = userService.getUserById(userId);
         return ResponseEntity.ok(userData);
     }
